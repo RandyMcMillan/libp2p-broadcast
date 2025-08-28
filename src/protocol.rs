@@ -45,6 +45,7 @@ pub enum Message {
     Subscribe(Topic),
     Broadcast(Topic, Arc<[u8]>),
     Unsubscribe(Topic),
+	Unknown()
 }
 
 impl Message {
@@ -70,7 +71,7 @@ impl Message {
                 msg.extend_from_slice(&bytes[(topic_len + 1)..]);
                 Message::Broadcast(topic, msg.into())
             }
-            _ => return Err(Error::new(ErrorKind::InvalidData, "invalid header")),
+			_ => { Message::Unknown() }//return Err(Error::new(ErrorKind::InvalidData, "invalid header")),
         })
     }
 
@@ -101,8 +102,9 @@ impl Message {
                 debug!("Broadcast!");
                 buf
             }
-        }
+			Unknown() => {vec![0u8;64]/* todo!()*/ }
     }
+}
 }
 
 #[derive(Clone, Debug)]

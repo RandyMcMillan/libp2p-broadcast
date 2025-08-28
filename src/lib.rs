@@ -181,6 +181,7 @@ impl NetworkBehaviour for Broadcast {
                 }
                 BroadcastEvent::Unsubscribed(peer, topic)
             }
+            Rx(Unknown()) => { todo!() }
             Tx => {
                 return;
             }
