@@ -10,9 +10,9 @@ use std::fmt;
 use std::sync::Arc;
 use std::task::{Context, Poll};
 
-mod protocol;
+pub mod protocol;
 
-pub use protocol::{BroadcastConfig, Topic};
+pub use protocol::*; //{BroadcastConfig, Topic};
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum BroadcastEvent {

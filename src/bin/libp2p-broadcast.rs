@@ -10,15 +10,29 @@ use std::sync::Arc;
 fn main() {
     debug!("Hello from libp2p-broadcast binary!");
 
-    let config = BroadcastConfig::default();
-    let mut broadcast = Broadcast::new(config);
-
-    let topic = Topic::new(b"my-topic");
-    broadcast.subscribe(topic.clone());
-    println!("Subscribed to topic: {:?}", topic);
+    let mut topic = Topic::new(b"my-topic-1");
 
     let msgs = [
         Message::Broadcast(Topic::new(b""), Arc::new(*b"")),
+        Message::Subscribe(topic),
+        Message::Unsubscribe(topic),
+        Message::Broadcast(topic, Arc::new(*b"content")),
+    ];
+    for msg in &msgs {
+        println!("msg: {:?}", msg);
+        let msg2 = Message::from_bytes(&msg.to_bytes()).unwrap();
+        assert_eq!(msg, &msg2);
+    }
+
+    topic = Topic::new(b"my-topic-2");
+    let config = BroadcastConfig::default();
+    let mut broadcast = Broadcast::new(config);
+    broadcast.subscribe(topic.clone());
+    println!("Subscribed to topic: {:?}", topic);
+    broadcast.broadcast(&topic, Arc::new(*b"my-topic-2 content!"));
+    let msgs = [
+        Message::Broadcast(Topic::new(b""), Arc::new(*b"")),
+        Message::Subscribe(Topic::new(b"")),
         Message::Subscribe(topic),
         Message::Unsubscribe(topic),
         Message::Broadcast(topic, Arc::new(*b"content")),

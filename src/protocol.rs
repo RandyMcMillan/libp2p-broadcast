@@ -1,6 +1,7 @@
 use futures::future::BoxFuture;
 use futures::io::{AsyncRead, AsyncWrite, AsyncWriteExt};
 use libp2p::core::{upgrade, InboundUpgrade, OutboundUpgrade, UpgradeInfo};
+use log::debug;
 use std::io::{Error, ErrorKind, Result};
 use std::sync::Arc;
 
@@ -47,7 +48,8 @@ pub enum Message {
 }
 
 impl Message {
-    fn from_bytes(bytes: &[u8]) -> Result<Self> {
+    pub fn from_bytes(bytes: &[u8]) -> Result<Self> {
+        debug!("Message::from_bytes!");
         if bytes.is_empty() {
             return Err(Error::new(ErrorKind::InvalidData, "empty message"));
         }
@@ -72,26 +74,31 @@ impl Message {
         })
     }
 
-    fn to_bytes(&self) -> Vec<u8> {
+    pub fn to_bytes(&self) -> Vec<u8> {
+        debug!("Message::to_bytes!");
         use Message::*;
         match self {
             Subscribe(topic) => {
+                debug!("Message::to_bytes::Subscribe!");
                 let mut buf = Vec::with_capacity(topic.len() + 1);
                 buf.push((topic.len() as u8) << 2);
                 buf.extend_from_slice(topic);
                 buf
             }
             Unsubscribe(topic) => {
+                debug!("Message::to_bytes::Unsubscribe!");
                 let mut buf = Vec::with_capacity(topic.len() + 1);
                 buf.push((topic.len() as u8) << 2 | 0b10);
                 buf.extend_from_slice(topic);
                 buf
             }
             Broadcast(topic, msg) => {
+                debug!("Message::to_bytes::Broadcast!");
                 let mut buf = Vec::with_capacity(topic.len() + msg.len() + 1);
                 buf.push((topic.len() as u8) << 2 | 0b01);
                 buf.extend_from_slice(topic);
                 buf.extend_from_slice(msg);
+                debug!("Broadcast!");
                 buf
             }
         }
