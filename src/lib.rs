@@ -1,4 +1,3 @@
-use crate::protocol::Message;
 use fnv::{FnvHashMap, FnvHashSet};
 use libp2p::core::connection::ConnectionId;
 use libp2p::swarm::{
@@ -11,8 +10,7 @@ use std::sync::Arc;
 use std::task::{Context, Poll};
 
 pub mod protocol;
-
-pub use protocol::*; //{BroadcastConfig, Topic};
+pub use protocol::*;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum BroadcastEvent {
