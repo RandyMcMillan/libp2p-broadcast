@@ -11,3 +11,7 @@ repository = "https://github.com/ipfs-rust/libp2p-broadcast"
 fnv = "1.0.7"
 futures = "0.3.21"
 libp2p = { version = "0.43.0", default-features = false }
+
+[[bin]]
+name = "libp2p-broadcast"
+path = "src/bin/libp2p-broadcast.rs"
