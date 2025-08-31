@@ -26,9 +26,9 @@ fn main() {
 
     let msgs = [
         Message::Broadcast(Topic::new(b""), Arc::new(*b"")),
-        Message::Subscribe(topic.clone()),
-        Message::Unsubscribe(topic.clone()),
-        Message::Broadcast(topic.clone(), Arc::new(*b"content")),
+        Message::Subscribe(topic),
+        Message::Unsubscribe(topic),
+        Message::Broadcast(topic, Arc::new(*b"content")),
     ];
     for msg in &msgs {
         println!("msg: {:?}", msg);
@@ -37,14 +37,14 @@ fn main() {
 
     let config = BroadcastConfig::default();
     let mut broadcast = Broadcast::new(config);
-    broadcast.subscribe(topic.clone());
+    broadcast.subscribe(topic);
     println!("Subscribed to topic: {:?}", topic);
     broadcast.broadcast(&topic, Arc::new(*b"my-topic-2 content!"));
     let msgs = [
         Message::Broadcast(Topic::new(b""), Arc::new(*b"")),
         Message::Subscribe(Topic::new(b"")),
-        Message::Subscribe(topic.clone()),
-        Message::Unsubscribe(topic.clone()),
+        Message::Subscribe(topic),
+        Message::Unsubscribe(topic),
         Message::Broadcast(topic, Arc::new(*b"content")),
     ];
     for msg in &msgs {
