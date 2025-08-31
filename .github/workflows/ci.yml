@@ -43,7 +43,7 @@ jobs:
       CARGO_INCREMENTAL: 0
       LLVM_CONFIG_PATH: /usr/local/opt/llvm/bin/llvm-config
       NDK_HOME: /usr/local/lib/android/sdk/ndk-bundle
-      RUSTFLAGS: '--cfg getrandom_backend="wasm_js"'
+      #RUSTFLAGS: '--cfg getrandom_backend="wasm_js"'
       
     runs-on: ${{ matrix.platform.host }}
     steps:
