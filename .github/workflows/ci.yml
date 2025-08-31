@@ -25,17 +25,19 @@ jobs:
         - target: armv7-linux-androideabi
           host: ubuntu-latest
           cross: true
-        - target: aarch64-linux-android
-          host: ubuntu-latest
-          cross: true
+          
+        #- target: aarch64-linux-android
+        #  host: ubuntu-latest
+        #  cross: true
 
         - target: aarch64-apple-ios
           host: macos-latest
           cross: true
 
-       # - target: wasm32-unknown-unknown
-       #   host: ubuntu-latest
-       #   cross: true
+        - target: wasm32-unknown-unknown
+          host: ubuntu-latest
+          cross: true
+          
     env:
       RUST_BACKTRACE: 1
       CARGO_INCREMENTAL: 0
