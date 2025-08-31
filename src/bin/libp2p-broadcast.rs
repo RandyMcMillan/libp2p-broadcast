@@ -43,7 +43,7 @@ fn main() {
     let msgs = [
         Message::Broadcast(Topic::new(b""), Arc::new(*b"")),
         Message::Subscribe(Topic::new(b"")),
-        Message::Subscribe(&topic),
+        Message::Subscribe(topic),
         Message::Unsubscribe(&topic),
         Message::Broadcast(topic, Arc::new(*b"content")),
     ];
