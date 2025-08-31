@@ -83,14 +83,10 @@ jobs:
     #    cache: 'gradle'
 
     - name: Install Android SDK Platform 30
+    if: contains(matrix.platform.target, 'android')
       run: |
         echo "y" | sudo /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --install "platforms;android-30" "build-tools;30.0.3" "ndk;25.1.8937393"
-        # The specific paths and versions here may vary.
-        # Check the official Android developer documentation for the latest command-line tools and versions.
-
-    - name: Install cargo-apk
-      if: contains(matrix.platform.target, 'android')
-      run: cargo install cargo-apk
+        cargo install cargo-apk
 
     - name: Build
       if: contains(matrix.platform.target, 'android') == false
