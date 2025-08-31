@@ -22,9 +22,9 @@ jobs:
           host: windows-latest
           cross: false
 
-        - target: armv7-linux-androideabi
-          host: ubuntu-latest
-          cross: true
+        #- target: armv7-linux-androideabi
+        #  host: ubuntu-latest
+        #  cross: true
           
         #- target: aarch64-linux-android
         #  host: ubuntu-latest
