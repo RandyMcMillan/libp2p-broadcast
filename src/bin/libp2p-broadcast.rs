@@ -37,7 +37,7 @@ fn main() {
 
     let config = BroadcastConfig::default();
     let mut broadcast = Broadcast::new(config);
-    broadcast.subscribe(topic.clone());
+    broadcast.subscribe(topic);
     println!("Subscribed to topic: {:?}", topic);
     broadcast.broadcast(&topic, Arc::new(*b"my-topic-2 content!"));
     let msgs = [
